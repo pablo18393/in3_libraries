@@ -101,7 +101,7 @@ class Adafruit_ILI9341_STM : public Adafruit_GFX_AS {
 
   Adafruit_ILI9341_STM(int8_t _CS, int8_t _DC, int8_t _RST = -1);
 
-  void     begin(SPIClass & spi, uint32_t freq=48000000);
+  void     begin(SPIClass & spi, uint32_t freq=20000000);
   void     begin(void) { begin(SPI); }
   void     setAddrWindow(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1),
            pushColor(uint16_t color),

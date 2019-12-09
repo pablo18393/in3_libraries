@@ -19,8 +19,8 @@
 #include "Adafruit_ILI9341_STM.h"
 
 // For the Adafruit shield, these are the default.
-#define TFT_DC 9
-#define TFT_CS 10
+#define TFT_CS PC13
+#define TFT_DC PB8
 
 // Use hardware SPI (on Uno, #13, #12, #11) and the above for CS/DC
 Adafruit_ILI9341_STM tft = Adafruit_ILI9341_STM(TFT_CS, TFT_DC);
@@ -28,73 +28,74 @@ Adafruit_ILI9341_STM tft = Adafruit_ILI9341_STM(TFT_CS, TFT_DC);
 //Adafruit_ILI9341_STM tft = Adafruit_ILI9341_STM(TFT_CS, TFT_DC, TFT_MOSI, TFT_CLK, TFT_RST, TFT_MISO);
 
 void setup() {
-  Serial.begin(9600);
-  Serial.println("ILI9341 Test!"); 
- 
+  Serial1.begin(115200);
+  Serial1.println("ILI9341 Test!"); 
+  SPI.setModule(2);
+
   tft.begin();
 
   // read diagnostics (optional but can help debug problems)
   uint8_t x = tft.readcommand8(ILI9341_RDMODE);
-  Serial.print("Display Power Mode: 0x"); Serial.println(x, HEX);
+  Serial1.print("Display Power Mode: 0x"); Serial1.println(x, HEX);
   x = tft.readcommand8(ILI9341_RDMADCTL);
-  Serial.print("MADCTL Mode: 0x"); Serial.println(x, HEX);
+  Serial1.print("MADCTL Mode: 0x"); Serial1.println(x, HEX);
   x = tft.readcommand8(ILI9341_RDPIXFMT);
-  Serial.print("Pixel Format: 0x"); Serial.println(x, HEX);
+  Serial1.print("Pixel Format: 0x"); Serial1.println(x, HEX);
   x = tft.readcommand8(ILI9341_RDIMGFMT);
-  Serial.print("Image Format: 0x"); Serial.println(x, HEX);
+  Serial1.print("Image Format: 0x"); Serial1.println(x, HEX);
   x = tft.readcommand8(ILI9341_RDSELFDIAG);
-  Serial.print("Self Diagnostic: 0x"); Serial.println(x, HEX); 
+  Serial1.print("Self Diagnostic: 0x"); Serial1.println(x, HEX); 
   
-  Serial.println(F("Benchmark                Time (microseconds)"));
+  Serial1.println(F("Benchmark                Time (microseconds)"));
 
-  Serial.print(F("Screen fill              "));
-  Serial.println(testFillScreen());
+  Serial1.print(F("Screen fill              "));
+  Serial1.println(testFillScreen());
   delay(500);
 
-  Serial.print(F("Text                     "));
-  Serial.println(testText());
+  Serial1.print(F("Text                     "));
+  Serial1.println(testText());
   delay(3000);
 
-  Serial.print(F("Lines                    "));
-  Serial.println(testLines(ILI9341_CYAN));
+  Serial1.print(F("Lines                    "));
+  Serial1.println(testLines(ILI9341_CYAN));
   delay(500);
 
-  Serial.print(F("Horiz/Vert Lines         "));
-  Serial.println(testFastLines(ILI9341_RED, ILI9341_BLUE));
+  Serial1.print(F("Horiz/Vert Lines         "));
+  Serial1.println(testFastLines(ILI9341_RED, ILI9341_BLUE));
   delay(500);
 
-  Serial.print(F("Rectangles (outline)     "));
-  Serial.println(testRects(ILI9341_GREEN));
+  Serial1.print(F("Rectangles (outline)     "));
+  Serial1.println(testRects(ILI9341_GREEN));
   delay(500);
 
-  Serial.print(F("Rectangles (filled)      "));
-  Serial.println(testFilledRects(ILI9341_YELLOW, ILI9341_MAGENTA));
+  Serial1.print(F("Rectangles (filled)      "));
+  Serial1.println(testFilledRects(ILI9341_YELLOW, ILI9341_MAGENTA));
   delay(500);
 
-  Serial.print(F("Circles (filled)         "));
-  Serial.println(testFilledCircles(10, ILI9341_MAGENTA));
+  Serial1.print(F("Circles (filled)         "));
+  Serial1.println(testFilledCircles(10, ILI9341_MAGENTA));
 
-  Serial.print(F("Circles (outline)        "));
-  Serial.println(testCircles(10, ILI9341_WHITE));
+  Serial1.print(F("Circles (outline)        "));
+  Serial1.println(testCircles(10, ILI9341_WHITE));
   delay(500);
 
-  Serial.print(F("Triangles (outline)      "));
-  Serial.println(testTriangles());
+  Serial1.print(F("Triangles (outline)      "));
+  Serial1.println(testTriangles());
   delay(500);
 
-  Serial.print(F("Triangles (filled)       "));
-  Serial.println(testFilledTriangles());
+  Serial1.print(F("Triangles (filled)       "));
+  Serial1.println(testFilledTriangles());
   delay(500);
 
-  Serial.print(F("Rounded rects (outline)  "));
-  Serial.println(testRoundRects());
+  Serial1.print(F("Rounded rects (outline)  "));
+  Serial1.println(testRoundRects());
   delay(500);
 
-  Serial.print(F("Rounded rects (filled)   "));
-  Serial.println(testFilledRoundRects());
+  Serial1.print(F("Rounded rects (filled)   "));
+  Serial1.println(testFilledRoundRects());
   delay(500);
 
-  Serial.println(F("Done!"));
+  Serial1.println(F("Done!"));
 
 }
 
